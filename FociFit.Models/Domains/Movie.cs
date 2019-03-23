@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace FociFit.Models.Domains
 {
-    public class Movies : MoviesUpdateRequest
+    public class Movie : MoviesUpdateRequest
     {
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+
     }
 }

@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 
 namespace FociFit.Services
 {
+
     public class MoviesService
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;

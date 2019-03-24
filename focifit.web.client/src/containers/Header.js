@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 class Header extends React.Component {
    constructor(props) {
@@ -13,25 +14,12 @@ class Header extends React.Component {
          <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid black', textAlign: 'center' }}>
             <div>
                <button id="signup" onClick={this.handleClick}>
-                  Signup
+                  <NavLink to="/register">Register</NavLink>
                </button>
                <button id="login" onClick={this.handleClick}>
-                  Login
+                  <NavLink to="/login">Login</NavLink>
                </button>
             </div>
-            {this.state.signingUp && (
-               <form style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
-                  <input type="email" />
-                  <input type="password" />
-                  <input type="password" />
-               </form>
-            )}
-            {this.state.loggingIn && (
-               <form style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
-                  <input type="email" />
-                  <input type="password" />
-               </form>
-            )}
          </div>
       );
    }

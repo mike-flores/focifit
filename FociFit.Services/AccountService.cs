@@ -1,6 +1,6 @@
 ﻿using FociFit.Models.Domains;
+using FociFit.Models.Requests;
 using FociFit.Models.Responses;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -8,16 +8,16 @@ using System.Data.SqlClient;
 namespace FociFit.Services
 {
 
-    public class MoviesService
+    public class AccountService
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        public int Insert(MoviesCreateRequest model)
+        public int Create(AccountCreateRequest createRequest)
         {
-            int result = 0;
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            int newEntryId = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "Movies_Insert";
+                string sqlQuery = "Account_Create";
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -28,57 +28,62 @@ namespace FociFit.Services
                     parameter.Direction = System.Data.ParameterDirection.Output;
                     //Alternatively command.Parameters.Add("@Id", SqlDBType.Int).Direction = ParameterDirection.Output;
                     command.Parameters.Add(parameter);
-                    command.Parameters.AddWithValue("@Title", model.Title);
-                    command.Parameters.AddWithValue("@ReleaseYear", model.ReleaseYear);
+                    command.Parameters.AddWithValue("@Email", createRequest.Email);
+                    command.Parameters.AddWithValue("@Password", createRequest.Password);
+                    command.Parameters.AddWithValue("@ModifiedBy", createRequest.Password);
 
                     connection.Open();
                     command.ExecuteNonQuery(); //Non query means no result sets expected
-                    result = (int)command.Parameters["@Id"].Value;
+                    newEntryId = (int)command.Parameters["@Id"].Value;
                     connection.Close();
                 }
             }
-            return result;
+            return newEntryId;
         }
 
-        public Movie SelectById(int id)
+        public Account ReadById(int id)
         {
-            Movie model = new Movie();
+            Account account = new Account();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "Movies_SelectById";
-                using(SqlCommand command = new SqlCommand(sqlQuery, connection))
+                string sqlQuery = "Account_ReadById";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Id", id);
 
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
-
-                    if(model.Id == null)
+                    
+                    if(!reader.HasRows)
                     {
                         return null;
                     }
+            
 
                     while (reader.Read())
                     {
                         int index = 0;
-                        model.Id = reader.GetInt32(index++);
-                        model.Title = reader.GetString(index++);
-                        model.ReleaseYear = reader.GetInt32(index++);
+                        account.Id = reader.GetInt32(index++);
+                        account.Email = reader.GetString(index++);
+                        account.Password = reader.GetString(index++);
+                        account.CreatedDate = reader.GetDateTime(index++);
+                        account.ModifiedDate = reader.GetDateTime(index++);
+                        account.ModifiedBy = reader.GetString(index++);
                     }
                     connection.Close();
                 }
             }
-            return model;
+            return account;
         }
 
-        public List<Movie> SelectAll()
+        public List<Account> ReadAll()
         {
-            List<Movie> movies = new List<Movie>();
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            List<Account> accounts = new List<Account>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "Movies_SelectAll";
-                using(SqlCommand command = new SqlCommand(sqlQuery, connection))
+                string sqlQuery = "Account_ReadAll";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -87,31 +92,35 @@ namespace FociFit.Services
                     while (reader.Read())
                     {
                         int index = 0;
-                        Movie model = new Movie();
+                        Account account = new Account();
 
-                        model.Id = reader.GetInt32(index++);
-                        model.Title = reader.GetString(index++);
-                        model.ReleaseYear = reader.GetInt32(index++);
-                        movies.Add(model);
+                        account.Id = reader.GetInt32(index++);
+                        account.Email = reader.GetString(index++);
+                        account.Password = reader.GetString(index++);
+                        account.CreatedDate = reader.GetDateTime(index++);
+                        account.ModifiedDate = reader.GetDateTime(index++);
+                        account.ModifiedBy = reader.GetString(index++);
+                        accounts.Add(account);
                     }
                     connection.Close();
                 }
             }
-            return movies;
+            return accounts;
         }
 
-        public int Update(MoviesUpdateRequest model)
+        public int Update(AccountUpdateRequest updateRequest)
         {
-            int affectedRows;
-            using(SqlConnection  connection = new SqlConnection(connectionString))
+            int affectedRows = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "Movies_Update";
-                using(SqlCommand command = new SqlCommand(sqlQuery, connection))
+                string sqlQuery = "Account_Update";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@Id", model.Id);
-                    command.Parameters.AddWithValue("@Title", model.Title);
-                    command.Parameters.AddWithValue("@ReleaseYear", model.ReleaseYear /*?? (object)DBNull.Value at the end of a parameter*/);
+                    command.Parameters.AddWithValue("@Id", updateRequest.Id);
+                    command.Parameters.AddWithValue("@Email", updateRequest.Email);
+                    command.Parameters.AddWithValue("@Password", updateRequest.Password /*?? (object)DBNull.Value at the end of a parameter*/);
+                    command.Parameters.AddWithValue("ModifiedBy", updateRequest.ModifiedBy);
                     //If a parameter is nullable, ? in the model and also ?? (object)DBNull.Value at the end of a parameter.
 
                     connection.Open();
@@ -125,10 +134,10 @@ namespace FociFit.Services
         public int Delete(int id)
         {
             int affectedRows = 0;
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "Movies_Delete";
-                using(SqlCommand command = new SqlCommand(sqlQuery, connection))
+                string sqlQuery = "Account_Delete";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Id", id);

@@ -211,6 +211,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountControllerMVC.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MovieController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -332,6 +333,16 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FociFit.Models\FociFit.Models.csproj">
+      <Project>{4A61DC2B-3A69-48D6-9154-8BBA2AB0D401}</Project>
+      <Name>FociFit.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FociFit.Services\FociFit.Services.csproj">
+      <Project>{EA38A5FA-B9CE-479A-9142-078EAAC318EE}</Project>
+      <Name>FociFit.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

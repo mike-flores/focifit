@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domains\Account.cs" />
     <Compile Include="Domains\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\AccountCreateRequest.cs" />
+    <Compile Include="Requests\AccountUpdateRequest.cs" />
     <Compile Include="Requests\MoviesCreateRequest.cs" />
     <Compile Include="Requests\MoviesUpdateRequest.cs" />
   </ItemGroup>

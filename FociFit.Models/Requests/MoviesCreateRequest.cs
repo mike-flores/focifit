@@ -6,7 +6,7 @@ namespace FociFit.Models.Responses
     {
         [Required, MaxLength(50)]
         public string Title { get; set; }
-        [Required, MaxLength(4)]
+        [Required]
         public int ReleaseYear { get; set; }
     }
 }

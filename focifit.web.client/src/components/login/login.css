@@ -1,0 +1,9 @@
+.login-initial {
+   opacity: 0;
+   transition: 2s;
+}
+
+.login-fadein {
+   opacity: 1;
+   
+}

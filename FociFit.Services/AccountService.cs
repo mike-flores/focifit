@@ -77,6 +77,42 @@ namespace FociFit.Services
             return account;
         }
 
+        public Account ReadByEmail(string email)
+        {
+            Account account = new Account();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "Account_ReadByEmail";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (!reader.HasRows)
+                    {
+                        return null;
+                    }
+
+
+                    while (reader.Read())
+                    {
+                        int index = 0;
+                        account.Id = reader.GetInt32(index++);
+                        account.Email = reader.GetString(index++);
+                        account.Password = reader.GetString(index++);
+                        account.CreatedDate = reader.GetDateTime(index++);
+                        account.ModifiedDate = reader.GetDateTime(index++);
+                        account.ModifiedBy = reader.GetString(index++);
+                    }
+                    connection.Close();
+                }
+            }
+            return account;
+        }
+
         public List<Account> ReadAll()
         {
             List<Account> accounts = new List<Account>();

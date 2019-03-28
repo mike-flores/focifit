@@ -35,6 +35,21 @@ namespace FociFit.Web.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, newId);
         }
 
+        [HttpGet, Route("api/accounts/{email}/")]
+        public HttpResponseMessage ReadByEmail(string email)
+        {
+            Account account = accountService.ReadByEmail(email);
+            if (account == null)
+            {
+                ModelState.AddModelError("", "The requested email does not exist in the database.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, account);           
+
+        }
         [HttpGet, Route("api/accounts/{id:int}")]
         public HttpResponseMessage ReadById(int id)
         {
@@ -42,11 +57,10 @@ namespace FociFit.Web.Controllers
             if(account == null)
             {
                 ModelState.AddModelError("", "The requested entry does not exist in the database.");
-                //return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
             }
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ModelState);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, account);

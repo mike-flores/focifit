@@ -1,17 +1,18 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
-import Register from '../Register';
-import Login from '../Login';
-
+import './content.css';
+import Register from '../../components/register/Register';
+import Login from '../../components/login/Login';
+import Training from '../../components/training/Training';
 class Content extends React.Component {
    render() {
       return (
-         <div style={{ border: '1px solid red', minHeight: '100vh' }}>
+         <div style={{ margin: 'auto' }}>
             <Switch>
-               {/* <Route exact path="/" /> */}
+               <Route exact path="/" />
                <Route exact path="/register" component={Register} />
                <Route exact path="/login" component={Login} />
+               <Route exact path="/training" component={Training} />
             </Switch>
          </div>
       );

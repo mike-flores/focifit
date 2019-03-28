@@ -1,0 +1,26 @@
+.button-wrapper {
+   border-left: 2px solid  #fbc02d;
+   border-right: 2px solid #fbc02d;
+   width: 80px;
+   box-shadow: 3px 3px 20px rgba(0, 0, 0, .8);
+   text-align: center;
+   background: rgba(0, 0, 0, 0);
+}
+.navlink-wrapper:hover {
+   background:  rgba(251, 192, 45, .8);
+   transition: .2s;
+}
+
+.navlink-wrapper:focus-within {
+   background: rgba(251, 192, 45, .8);
+}
+
+.button-primary {
+   background: transparent;
+   border: none;
+}
+
+.button-primary:focus {
+   outline:0;
+}
+

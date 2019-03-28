@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 // import './index.css';
-import App from './App';
+import { user } from './containers/reducers';
+import App from './containers/app/App';
 import 'antd/dist/antd.css';
 import * as serviceWorker from './serviceWorker';
+import  { createLogger } from 'redux-logger';
+//  import Input from './components/common/Input';
 
-const rootReducer = combineReducers({});
-const store = createStore(rootReducer);
+const logger = createLogger();
+const rootReducer = combineReducers({ user });
+const store = createStore(rootReducer, applyMiddleware(logger));
+
 ReactDOM.render(
    <Provider store={store}>
       <BrowserRouter>

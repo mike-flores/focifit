@@ -1,0 +1,36 @@
+.scrollbar
+{
+	overflow-y: scroll;
+   margin-bottom: 25px;
+   /* margin-left: 30px; */
+	float: left;
+	height: 460px;
+	width: 100%;
+	background: none;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+#style-1::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+   background: none;
+   border: 1px solid rgba(0, 0, 0, .4);
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 12px;
+	background: none;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background: rgba(0, 0, 0, .7);
+}

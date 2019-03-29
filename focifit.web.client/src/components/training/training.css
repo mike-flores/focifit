@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 
-th {
-   padding: 0px 62px;
+h3 {
+   color: white!important;
 }
 td {
-   padding: 16px 62px;
+   text-align: left;
 }
-
 tr {
    border: 1px solid rgba(220,220,220, .1);
 }

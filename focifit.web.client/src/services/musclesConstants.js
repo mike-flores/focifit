@@ -1,0 +1,10 @@
+export const SHOULDERS = 9;
+export const BICEPS = 13;
+export const CALVES = 15;
+export const TRICEPS = 5;
+export const GLUTES = 8;
+export const BACK = 12;
+export const ABS = 14;
+export const HAMSTRINGS = 11;
+export const CHEST = 4;
+export const QUADS = 10;

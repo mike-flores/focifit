@@ -61,7 +61,7 @@ class Header extends React.Component {
                         to="/register"
                      >
                         <Button id="signup" onClick={this.handleClick}>
-                           Nutrition
+                           Articles
                         </Button>
                      </NavLink>
                      <NavLink
@@ -115,7 +115,7 @@ class Header extends React.Component {
 
    handleClick = event => {
       console.log(event.target.id);
-      console.log('clicked');
+      console.log('clickeed');
       switch (event.target.id) {
          case 'signup':
             if (this.state.loggingIn) this.setState({ loggingIn: false });
